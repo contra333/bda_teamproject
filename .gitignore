@@ -1,0 +1,41 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+notebooks/.backups/
+
+# OS / IDE
+Thumbs.db
+.DS_Store
+.idea/
+.vscode/
+
+# Secrets / local
+.env
+.env.*
+
+# Data & heavy artifacts (재생 가능한 것은 커밋하지 않음)
+data/*.csv
+data/*.tsv
+data/*.jsonl
+data/*.npz
+data/*.pt
+data/*.pth
+data/*.bin
+!data/README.md
+
+models/
+*.pt
+*.pth
+*.ckpt
+*.onnx
+
+# Large result dumps (표·작은 csv는 results/에 커밋 가능)
+results/**/*.pkl
+results/**/*.joblib

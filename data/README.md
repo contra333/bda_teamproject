@@ -1,10 +1,13 @@
 # data/
 
-원본 BANKING77 CSV는 Git에 올리지 않는다. 아래 URL에서 받아 이 폴더에 둔다.
+원본 데이터 파일은 Git에 올리지 않는다 (`.gitignore`에서 제외). 이 문서만 보고
+누구나 같은 데이터를 다시 받을 수 있게 아래를 채운다.
 
-- train: https://raw.githubusercontent.com/PolyAI-LDN/task-specific-datasets/master/banking_data/train.csv
-- test: https://raw.githubusercontent.com/PolyAI-LDN/task-specific-datasets/master/banking_data/test.csv
-- 라이선스: CC BY 4.0
-- 권장 파일명: `train.csv`, `test.csv`
+- 데이터셋 이름:
+- 출처 URL:
+- 라이선스:
+- 규모 (행 수 / 장 수):
+- 받는 방법: (직접 다운로드 / `src/`의 스크립트)
+- 저장할 파일명:
 
-다운로드 스크립트는 `src/download_banking77.py` (추가 예정)를 사용한다.
+> 4주차 데이터 수집 계획서와 같은 내용이 여기 남으면 된다.

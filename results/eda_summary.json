@@ -1,0 +1,38 @@
+{
+  "rows": 3000,
+  "columns": 18,
+  "posts": 101,
+  "label_counts": {
+    "0": 2236,
+    "1": 764
+  },
+  "majority_accuracy": 0.7453333333333333,
+  "majority_hate_precision": 0.0,
+  "majority_hate_recall": 0.0,
+  "majority_hate_f1": 0.0,
+  "type_counts": {
+    "1": 764,
+    "2": 764,
+    "3": 1472
+  },
+  "removed_rows": 0,
+  "duplicate_rows_excluding_index": 1,
+  "duplicate_pair_excess_rows": 6,
+  "conflicting_exact_pair_groups": 0,
+  "comments_with_multiple_labels": 710,
+  "comments_across_sets": 28,
+  "contexts_across_sets": 18,
+  "complete_type12_comment_groups": 763,
+  "incomplete_type12_comment_groups": 2,
+  "date_min": "2024-06-02",
+  "date_max": "2025-01-21",
+  "invalid_dates": 0,
+  "versions": {
+    "python": "3.12.3",
+    "pandas": "3.0.3",
+    "numpy": "2.5.0",
+    "scikit-learn": "1.9.1",
+    "matplotlib": "3.11.0"
+  },
+  "scope": "Full-data structural audit; no model fit, predictions, test errors or scores inspected."
+}

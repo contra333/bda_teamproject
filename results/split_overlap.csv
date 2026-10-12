@@ -1,0 +1,13 @@
+﻿split_a,split_b,field,shared_unique_values,affected_rows_a,affected_rows_b
+train,valid,Set,0,0,0
+train,valid,Context,9,115,43
+train,valid,Comment,14,40,33
+train,valid,Context+Comment,1,1,1
+train,test,Set,0,0,0
+train,test,Context,4,11,39
+train,test,Comment,12,36,28
+train,test,Context+Comment,2,2,2
+valid,test,Set,0,0,0
+valid,test,Context,6,12,27
+valid,test,Comment,11,29,26
+valid,test,Context+Comment,3,3,3

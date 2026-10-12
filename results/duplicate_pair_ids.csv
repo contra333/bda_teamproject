@@ -1,0 +1,12 @@
+﻿Index,Set,Type,Hate speech,split
+201,7,2,0,test
+599,17,2,0,test
+645,18,2,0,valid
+780,21,2,0,valid
+1295,36,2,0,test
+1501,44,2,0,test
+1596,47,2,0,valid
+1671,51,2,0,train
+1673,51,2,0,train
+2830,98,3,0,test
+2839,98,3,0,test

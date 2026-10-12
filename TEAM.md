@@ -8,7 +8,7 @@
 
 | 항목 | 내용 |
 |------|------|
-| 팀명 | 미정 |
+| 팀명 | 수수컴정 |
 | 대표 (연락 창구) | 안지수 · 팀장이 아니라 창구 역할 |
 | Notion | https://app.notion.com/p/bda0538d38d3837793b3016b2d21c682 |
 | GitHub | https://github.com/contra333/bda_teamproject |

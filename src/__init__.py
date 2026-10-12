@@ -1,0 +1,1 @@
+"""Shared KOCOH project code."""

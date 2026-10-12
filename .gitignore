@@ -24,6 +24,7 @@ Thumbs.db
 data/*.csv
 data/*.tsv
 data/*.jsonl
+data/*.json
 data/*.npz
 data/*.pt
 data/*.pth
@@ -44,3 +45,6 @@ results/**/*.joblib
 *.hwp
 *.hwpx
 ~$*
+
+# Local rendering intermediates and generated document builder
+.qa/

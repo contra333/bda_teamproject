@@ -1,0 +1,69 @@
+{
+  "source_data_sha256": "d5eb3c7bb4fd97471bd77efd9eb7f98ebc162151ef9725e821510551a4485a38",
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.5.0",
+    "pandas": "3.0.3",
+    "scipy": "1.18.0",
+    "scikit-learn": "1.9.1",
+    "matplotlib": "3.11.0"
+  },
+  "splits": {
+    "rows": 3000,
+    "post_groups": 77,
+    "outer_folds": 5,
+    "inner_folds": 4,
+    "test_once_per_row": true,
+    "group_overlap": 0,
+    "context_overlap": 0
+  },
+  "csv_comparisons": [
+    {
+      "file": "plm_folds.csv",
+      "status": "provided_only",
+      "rows": 60
+    },
+    {
+      "file": "baseline_folds.csv",
+      "status": "match_atol_1e-6",
+      "rows": 40
+    },
+    {
+      "file": "baseline_v2_folds.csv",
+      "status": "match_atol_1e-6",
+      "rows": 50
+    },
+    {
+      "file": "baseline_v2_by_type.csv",
+      "status": "match_atol_1e-6",
+      "rows": 120
+    },
+    {
+      "file": "comment_only_ceiling.csv",
+      "status": "match_atol_1e-6",
+      "rows": 5
+    },
+    {
+      "file": "baseline_v3_folds.csv",
+      "status": "match_atol_1e-6",
+      "rows": 60
+    },
+    {
+      "file": "baseline_v3_by_type.csv",
+      "status": "match_atol_1e-6",
+      "rows": 240
+    },
+    {
+      "file": "split_assignment_v2.csv",
+      "status": "match_atol_1e-6",
+      "rows": 15000
+    },
+    {
+      "file": "inner_val_composition.csv",
+      "status": "match_atol_1e-6",
+      "rows": 20
+    }
+  ],
+  "comment_oracle_mean": 0.7299905650033173,
+  "scope": "CPU baseline reproduction; PLM outputs supplied by team, no PLM retraining"
+}

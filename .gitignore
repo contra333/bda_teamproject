@@ -48,3 +48,9 @@ results/**/*.joblib
 
 # Local rendering intermediates and generated document builder
 .qa/
+
+# 로컬 전달 원본과 기존 모델 폴더
+/kocoh_mid_report.zip
+/kocoh_code_update_1023.zip
+/*단톡*.txt
+/model/

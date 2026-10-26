@@ -12,30 +12,62 @@
 - [KOCOH 데이터셋 기록](https://app.notion.com/p/KOCOH-v2-Context-Comment-3-000-3f70538d38d381f0b6bfc4f1828acede) · [원논문 기록](https://app.notion.com/p/KOCOH-Korean-Context-Dependent-Hate-Speech-Dataset-3f70538d38d381c39755f72fcf5d7b90)
 - [팀 규약](TEAM.md): 역할, 회의, 파일과 기여 기록 방식.
 
-## 현재 단계
+[중간보고서](https://www.notion.so/4050538d38d381e285cbec8e94e6632b) · [실험 결과·첨부](https://www.notion.so/4050538d38d3817cb014d68a07e4a72d)
 
-KOCOH v2의 EDA와 고정 분할·전처리 준비를 마쳤다. 원본 3,000행은 모두 유지했고, 학습/검증/시험은 Set 기준 1,770/639/591행이다. 모델 학습·성능 평가는 아직 수행하지 않았다.
+## 현재 단계 — 10/27 중간발표
 
-전통적 분류 방법과 사전학습 언어모델 각각에서 댓글만 / 맥락+댓글 조건을 비교한다는 방향은 팀 문서에 있다. 구체적인 모델·동결 표현 또는 fine-tuning·주요 지표와 성공 기준은 아직 확인할 사항이다. Notion의 KcBERT·KcELECTRA·macro-F1은 후보 메모로 구분한다.
+KOCOH v2 **3,000행, 77개 post_group**으로 같은 게시글 맥락이 train/test에 겹치지 않는 5-fold(seed 42) 비교를 마쳤다. TF-IDF 임계값은 각 바깥 train 안의 묶음 4-fold OOF로 선택하고 train 전체로 다시 학습한다.
 
-원본·모델 가중치·인증정보는 공유 저장소에 포함하지 않는다. 원본은 아래 명령으로 고정 버전을 내려받는다.
+| macro-F1 (5개 fold 평균 ± 표본 SD) | 댓글만 | 맥락+댓글 |
+|---|---:|---:|
+| Dummy most_frequent | 0.427 ± 0.005 | 입력 무관 |
+| TF-IDF + LogReg, 기본 임계값 | 0.647 ± 0.014 | 0.633 ± 0.033 |
+| TF-IDF + LogReg, 내부 OOF 임계값 | 0.644 ± 0.013 | 0.662 ± 0.027 |
+| KcELECTRA fine-tuning | 0.672 | 0.809 |
+| KLUE-RoBERTa fine-tuning | 0.637 | 0.778 |
 
-## 재현 순서
+PLM은 팀원이 제공한 단일 seed 결과이며 이번 통합에서 재학습하지 않았다. CPU 기준선은 WSL에서 재실행해 제공 CSV와 대조했다. fold SD는 seed 반복의 변동이나 신뢰구간이 아니다. PLM Context-only·seed 반복·임계값 조정·T4 시간 확인은 10·11주차 계획이다.
 
-이 PC의 수업 실행 환경은 WSL Ubuntu-24.04의 `~/envs/research`이다. 먼저 팀프로젝트 루트로 이동한 뒤 실행한다. 다른 팀원은 `requirements-eda.txt`에 기록한 실행 버전을 참고해 자신의 Python 환경을 준비한다.
+- **[발표자료 연결 안내](docs/W9_발표자료_연결안내.md)**: 그림·표·발표 해석 주의점.
+- **[실행 출력이 있는 노트북](notebooks/w9_midterm_자동화.ipynb)**: 모델 재학습 없이 결과와 그림을 확인한다.
+- [입력 조건 비교](figures/midterm/01_context_comparison.png) · [임계값 조정 전후](figures/midterm/02_threshold_comparison.png).
+- [검증 결과](results/midterm/validation.json) · [제공 원본 해시](results/midterm/source_manifest.json).
+
+원실험·PLM: 소지연 / 확장·임계값 비교: 안지수 / 통합·CPU 재현·게시: 진군학. 원본 Word 중간보고서는 Notion에 첨부한다.
+
+## 중간발표 재현 순서
+
+이 PC의 실행 환경은 WSL Ubuntu-24.04 `~/envs/research`이다. **팀프로젝트 루트**에서 실행한다. 다른 PC는 Python 3.12 환경에 `requirements-midterm.txt`를 설치한다. 모델 비교와 기존 EDA는 별도 모듈이므로 서로의 결과를 덮어쓰지 않는다.
 
 ```bash
+export OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2
 ~/envs/research/bin/python -m src.download_data
-~/envs/research/bin/python -m src.eda
+~/envs/research/bin/python -m src.midterm.baseline
+~/envs/research/bin/python -m src.midterm.baseline_v2
+~/envs/research/bin/python -m src.midterm.baseline_v3
+~/envs/research/bin/python -m src.midterm.validate
+~/envs/research/bin/python -m src.midterm.summarize
 ~/envs/research/bin/python -m unittest discover -s tests -v
 ```
 
-- [실행 완료 노트북](notebooks/w5_eda_자동화.ipynb): 진군학 자동화 담당 파일.
-- `src/preprocess.py`: 검증, Set 분할, 모델 입력 열 선택. 학습되는 변환은 후속 모델 코드에서 train에만 fit한다.
-- `data/README.md`: 출처·원본 해시·다운로드 안내.
-- `results/`: 재생성할 수 있는 집계표와 예외 ID. `figures/`: PNG와 PDF 그림 4쌍.
+- `src/midterm/`: 팀 제공 코드의 import·경로를 통합한 모듈. 통계·모델 설정은 유지했다.
+- `results/midterm/provided/`: 두 ZIP에서 받은 원래 CSV. 변경하지 않는다.
+- `results/midterm/reproduced/`: CPU 재실행 결과. 재실행 시 이 폴더의 산출물만 갱신한다.
+- `results/midterm/`: 계산한 요약, 재현 환경, 검증 결과. `figures/midterm/`: PNG 300 dpi와 벡터 PDF.
+- 기준선 실행은 모델 가중치·Notion 인증이 필요 없다. 제공 결과 노트북은 원본 데이터 없이도 읽고 실행할 수 있다.
 
-학습 전에는 Set 43/44 예외와 반복 입력의 평가 방침, tokenizer 기준 길이·잘림을 확인한다. 같은 분할을 모든 조건에서 재사용하고 test 점수를 보고 분할을 바꾸지 않는다.
+PLM 코드는 `src/midterm/plm.py`에 보존했다. 학습에는 torch·transformers·peft와 별도 모델 가중치가 필요하다. 팀 제공 결과의 모델 revision과 패키지 버전이 고정되어 있지 않아 완전한 PLM 재현을 보장하지 않는다. 원본 코드는 로컬 `models/KcELECTRA-base-v2022`(beomi/KcELECTRA-base-v2022), `models/klue-roberta-base`(klue/roberta-base)를 읽는다. PLM 재학습은 이번 CPU 재현 절차에 포함하지 않는다.
+
+## W5 EDA 재현
+
+W5의 Set 기준 고정 분할(1,770/639/591행), 코드·노트북·보고서는 당시 기록으로 보존한다. 현재 중간발표의 post_group 5-fold와 다르므로 모델 비교에 혼용하지 않는다.
+
+```bash
+~/envs/research/bin/python -m src.eda
+```
+
+- [W5 실행 노트북](notebooks/w5_eda_자동화.ipynb), `src/preprocess.py`, 기존 `results/`와 `figures/`는 W5용이다.
+- 데이터 출처·고정 버전·해시는 [data/README.md](data/README.md)에 있다. 원본·모델 가중치·인증정보는 커밋하지 않는다.
 
 ## 커밋 전 검사 설치
 
@@ -57,4 +89,4 @@ git config core.hooksPath hooks
 | `docs/` | 읽는 설명 Markdown과 공유 PDF |
 | Notion | 연구 맥락, 결과 요약, 판단, 담당과 다음 행동 |
 
-공유 설명의 수정 원본은 `docs/수수컴정_W5_EDA_보고서.md`다. Notion에는 요약·결정과 코드/문서 링크를 남긴다. figure 제작 및 에이전트 작업 규칙은 `AGENTS.md`에 두고 공유 보고서에는 넣지 않는다.
+공유 설명의 편집 기준본은 `docs/수수컴정_W5_EDA_발표안내.docx`다. PDF와 `docs/수수컴정_W5_EDA_보고서.md`는 수정된 Word에서 다시 생성한다. 기존 Markdown으로 Word를 덮어쓰지 않는다. Notion에는 요약·결정과 코드/문서 링크를 남긴다. figure 제작 및 에이전트 작업 규칙은 `AGENTS.md`에 두고 공유 보고서에는 넣지 않는다.

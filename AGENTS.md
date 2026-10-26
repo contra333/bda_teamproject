@@ -4,7 +4,7 @@
 
 ## 프로젝트
 - 수업: 빅데이터분석및이론 (AMA8039) 팀 프로젝트
-- 주제: **미정** (확정되면 `README.md` 첫 줄에 적는다. 이 파일에는 주제를 적지 않는다)
+- 주제와 연구 질문: `README.md` 및 최신 팀 중간보고서를 기준으로 한다.
 - 언어: Python
 - 그림: matplotlib (축 이름과 단위를 반드시 표기)
 
@@ -17,8 +17,11 @@
 ## 실험
 - 시드를 고정하고 코드 맨 위에 `SEED`를 둔다.
 - 실험 조건과 결과는 **Notion 실험 DB**에 남긴다 (저장소에 로그를 따로 만들지 않는다).
+- Notion 작성 방식은 수업 루트 [AGENTS.md의 Notion 수업 기록](../AGENTS.md#notion-수업-기록)을 참고한다. 아래 팀 EDA·그림 규약도 함께 적용하며, 수업 예제 결과를 팀 데이터의 실험 결과로 대체하지 않는다.
 - 결측 처리나 샘플 제외를 말없이 하지 않는다. 조건과 개수를 출력하고 기록한다.
-- KOCOH v2 분할: 원본 행 순서에서 StratifiedGroupKFold(5, shuffle=True, random_state=42), groups=Set, y=Hate speech. fold 0=test, fold 1=valid, 나머지=train. data/split_assignment.csv를 고정해 모든 입력 조건에서 공유한다. test는 최종 평가에만 사용하며 학습되는 변환은 train에만 fit한다. 반복 텍스트와 원본 Set 43/44 예외는 results/ 및 안내서에서 별도로 보고한다.
+- 현재 KOCOH 중간발표 분할: 같은 Context를 공유하는 Set을 합친 77개 post_group 기준 StratifiedGroupKFold(5, shuffle=True, seed=42). 각 바깥 train 안의 묶음 단위 4-fold OOF로 임계값을 고른 뒤 바깥 train 전체로 재학습한다. 모든 조건은 동일 분할을 공유하고 test는 선택에 쓰지 않는다. 구현은 `src/midterm/`, 제공·재실행 수치 및 분할표는 `results/midterm/`에 둔다.
+- W5의 Set 기준 고정 분할(1770/639/591)과 `src/preprocess.py`는 과거 EDA 재현용으로 보존한다. 현재 모델 비교에 W5 분할을 섞지 않는다. CSV 집계·분할표는 재현 산출물이며 별도의 실험 일지와 구별한다.
+- 수업 폴더 밖에서 이 저장소만 clone한 경우, Notion 인증 설정은 운영자의 WSL `~/.notion_env`와 수업 루트 규약을 확인한다. 저장소에는 인증값을 넣지 않는다.
 
 ## 하지 말 것
 - 대형 모델을 처음부터 학습하기. 학습 1회가 30분을 넘는 규모 (수업 자원 상한)

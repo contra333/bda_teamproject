@@ -1,0 +1,18 @@
+{
+  "raw_sha256": "d5eb3c7bb4fd97471bd77efd9eb7f98ebc162151ef9725e821510551a4485a38",
+  "archives": {
+    "kocoh_mid_report.zip": "be6c26eab16ac82682ef8b7e63c29f55e8ec81c27509705799c4105dbbfa748d",
+    "kocoh_code_update_1023.zip": "90f83eb11fd52c120e4363fe606cec9c63bb7693feacacbfbe66ee97356a233a"
+  },
+  "provided_files": {
+    "plm_folds.csv": "c6f1b8f637c30c05e1c48f6a5ac36cb5a8f39dd4bdf8124268ac8efa6cd8c746",
+    "baseline_folds.csv": "70527ec008aa78b3e7b1e013342167191e3cce1e1319aa7dcfa6f40356f7b6c7",
+    "baseline_v2_folds.csv": "57b4b015b5f30a44a3fd543d052b64c4862c15e22752ccf80b5bc822723086c7",
+    "baseline_v2_by_type.csv": "b5dee688bbaee11bfa5fc8609e1306031025626d7ae37e9897d8e17e8dd7fe71",
+    "comment_only_ceiling.csv": "6ff6bb6929c48816c5fe88b095e626502712d270092eb9057cc5e3c080684f69",
+    "baseline_v3_folds.csv": "f2478dfb69fc5a15aa400410c1e0d5e1c51cca1426d6750ac55fa857b9f0ccc5",
+    "baseline_v3_by_type.csv": "6062006cedaa7db65b3e12815158d972189eb546a92496eefe3bf6144026dde1",
+    "split_assignment_v2.csv": "255fd6713309f957f8b0496960775e837b56df84a8eb4b7cd8611eb78ee90605",
+    "inner_val_composition.csv": "675891ac1f633fc806138186a4afc0bc9dcf88b09d78993ec9f0138deae291b5"
+  }
+}

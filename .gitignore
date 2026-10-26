@@ -40,6 +40,8 @@ models/
 # Large result dumps (표·작은 csv는 results/에 커밋 가능)
 results/**/*.pkl
 results/**/*.joblib
+# 팀 제공 결과와 대조할 로컬 재실행본
+/results/midterm/reproduced/
 # 개인 작성 문서 — 제출은 Notion으로 하므로 저장소에 올리지 않는다
 *.docx
 *.hwp

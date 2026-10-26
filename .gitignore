@@ -44,7 +44,7 @@ results/**/*.joblib
 /results/midterm/reproduced/
 # 개인 작성 문서는 제외하되, 팀의 최종 중간보고서는 공유한다
 *.docx
-!/중간보고서_수수컴정.docx
+!/docs/중간보고서_수수컴정.docx
 *.hwp
 *.hwpx
 ~$*

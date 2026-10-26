@@ -1,4 +1,4 @@
-"""검증한 팀 제공 CSV로 중간발표 표와 그림을 만든다. 학습은 하지 않는다."""
+"""최종 중간발표 범위인 Dummy·TF-IDF 기준선 표와 그림을 만든다."""
 SEED = 42
 
 import matplotlib
@@ -16,11 +16,8 @@ BLUE, ORANGE = "#2864A5", "#B55A22"
 def tables():
     base = pd.read_csv(RESULTS / "provided/baseline_v2_folds.csv")
     tuned = pd.read_csv(RESULTS / "provided/baseline_v3_folds.csv")
-    plm = pd.read_csv(RESULTS / "provided/plm_folds.csv")
     base["method"] = "default threshold"
-    plm["rule"] = "default threshold"
-    combined = pd.concat([base, plm], ignore_index=True)
-    summary = combined.groupby(["model", "method", "condition"], sort=False)[["macro_f1", "recall_hate"]].agg(["mean", "std"])
+    summary = base.groupby(["model", "method", "condition"], sort=False)[["macro_f1", "recall_hate"]].agg(["mean", "std"])
     summary.columns = ["_".join(c) for c in summary.columns]
     summary = summary.reset_index()
     summary.to_csv(RESULTS / "model_summary.csv", index=False)
@@ -28,7 +25,7 @@ def tables():
     thresholds.columns = ["_".join(c) for c in thresholds.columns]
     thresholds = thresholds.reset_index()
     thresholds.to_csv(RESULTS / "threshold_summary.csv", index=False)
-    return base, tuned, plm, summary, thresholds
+    return base, tuned, summary, thresholds
 
 
 def style():
@@ -46,26 +43,25 @@ def save(fig, name):
     plt.close(fig)
 
 
-def plot_models(base, plm):
+def plot_models(base):
     selections = [("TF-IDF + Logistic Regression", base[base.model == "TF-IDF LogReg"]),
-                  ("KcELECTRA (fine-tuning)", plm[(plm.model == "KcELECTRA-base-v2022") & (plm.method == "finetune")]),
-                  ("KLUE-RoBERTa (fine-tuning)", plm[(plm.model == "klue-roberta-base") & (plm.method == "finetune")])]
-    fig, ax = plt.subplots(figsize=(10.4, 5.4))
+                  ("TF-IDF + Linear SVM", base[base.model == "TF-IDF LinearSVC"])]
+    fig, ax = plt.subplots(figsize=(10.4, 4.6))
     for j, (cond, color, hatch) in enumerate([("Comment-only", BLUE, ""), ("Context+Comment", ORANGE, "//")]):
         means = [g.loc[g.condition == cond, "macro_f1"].mean() for _, g in selections]
         sd = [g.loc[g.condition == cond, "macro_f1"].std(ddof=1) for _, g in selections]
-        bars = ax.barh(np.arange(3) + (j-.5)*.30, means, height=.27, xerr=sd,
+        bars = ax.barh(np.arange(2) + (j-.5)*.30, means, height=.27, xerr=sd,
                        color=color, hatch=hatch, edgecolor="white", capsize=3, label=cond)
         for b, m, e in zip(bars, means, sd):
             ax.text(m+e+.014, b.get_y()+b.get_height()/2, f"{m:.3f}", va="center", fontsize=11)
-    floor = base.loc[base.model == "Dummy most_frequent", "macro_f1"].mean()
+    floor = base.loc[base.model == "Dummy stratified", "macro_f1"].mean()
     ax.axvline(floor, color="#666666", ls=":", lw=1.4)
-    ax.text(floor+.008, 2.63, f"Majority baseline {floor:.3f}", fontsize=10)
-    ax.set(yticks=np.arange(3), yticklabels=[x[0] for x in selections], xlim=(0,1), ylim=(2.85,-.65), xlabel="Macro-F1 (0–1)")
+    ax.text(floor+.008, 1.63, f"Stratified random baseline {floor:.3f}", fontsize=10)
+    ax.set(yticks=np.arange(2), yticklabels=[x[0] for x in selections], xlim=(0,1), ylim=(1.85,-.65), xlabel="Macro-F1 (0–1)")
     ax.grid(axis="x", color="#DDDDDD", lw=.6);ax.set_axisbelow(True)
     ax.legend(loc="upper center", bbox_to_anchor=(.5,1.14), ncol=2, frameon=False)
-    fig.suptitle("Effect of adding context at the default threshold", fontsize=16, y=1.04)
-    fig.text(.02,-.025,"KOCOH v2 · 3,000 rows · 77 post groups · 5 outer folds · seed 42\nBars: mean; error bars: sample SD across folds (not seed repeats or confidence intervals).",fontsize=9.5)
+    fig.suptitle("TF-IDF baselines at the default decision threshold", fontsize=16, y=1.04)
+    fig.text(.02,-.06,"KOCOH v2 · 3,000 rows · 77 post groups · 5 outer folds · seed 42\nBars: mean; error bars: sample SD across folds. Majority baseline: 0.427; stratified random: 0.495.\nDefault thresholds: probability > 0.5 for Logistic Regression; decision score > 0 for Linear SVM.",fontsize=9)
     fig.tight_layout();save(fig,"01_context_comparison")
 
 
@@ -89,8 +85,8 @@ def plot_threshold(tuned):
 
 
 def main():
-    style();base,tuned,plm,summary,thresholds=tables()
-    plot_models(base,plm);plot_threshold(tuned)
+    style();base,tuned,summary,thresholds=tables()
+    plot_models(base);plot_threshold(tuned)
     print("표 2개 및 PNG/PDF 그림 2쌍 저장 완료")
 
 

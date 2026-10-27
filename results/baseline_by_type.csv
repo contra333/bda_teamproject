@@ -1,0 +1,241 @@
+model,condition,rule,fold,group,n,accuracy,pred_hate_rate
+TF-IDF LogReg,Comment-only,기본,0,Type 1,167,0.491018,0.491018
+TF-IDF LogReg,Comment-only,기본,0,Type 2,168,0.505952,0.494048
+TF-IDF LogReg,Comment-only,기본,0,Type 3,255,0.976471,0.023529
+TF-IDF LogReg,Comment-only,기본,0,Type 1·2 짝,159,0.0,
+TF-IDF LogReg,Comment-only,OOF 조정,0,Type 1,167,0.54491,0.54491
+TF-IDF LogReg,Comment-only,OOF 조정,0,Type 2,168,0.452381,0.547619
+TF-IDF LogReg,Comment-only,OOF 조정,0,Type 3,255,0.964706,0.035294
+TF-IDF LogReg,Comment-only,OOF 조정,0,Type 1·2 짝,159,0.0,
+TF-IDF LinearSVC,Comment-only,기본,0,Type 1,167,0.48503,0.48503
+TF-IDF LinearSVC,Comment-only,기본,0,Type 2,168,0.511905,0.488095
+TF-IDF LinearSVC,Comment-only,기본,0,Type 3,255,0.980392,0.019608
+TF-IDF LinearSVC,Comment-only,기본,0,Type 1·2 짝,159,0.0,
+TF-IDF LinearSVC,Comment-only,OOF 조정,0,Type 1,167,0.652695,0.652695
+TF-IDF LinearSVC,Comment-only,OOF 조정,0,Type 2,168,0.345238,0.654762
+TF-IDF LinearSVC,Comment-only,OOF 조정,0,Type 3,255,0.952941,0.047059
+TF-IDF LinearSVC,Comment-only,OOF 조정,0,Type 1·2 짝,159,0.0,
+TF-IDF LogReg,Context+Comment,기본,0,Type 1,167,0.263473,0.263473
+TF-IDF LogReg,Context+Comment,기본,0,Type 2,168,0.708333,0.291667
+TF-IDF LogReg,Context+Comment,기본,0,Type 3,255,1.0,0.0
+TF-IDF LogReg,Context+Comment,기본,0,Type 1·2 짝,159,0.125786,
+TF-IDF LogReg,Context+Comment,OOF 조정,0,Type 1,167,0.592814,0.592814
+TF-IDF LogReg,Context+Comment,OOF 조정,0,Type 2,168,0.422619,0.577381
+TF-IDF LogReg,Context+Comment,OOF 조정,0,Type 3,255,0.854902,0.145098
+TF-IDF LogReg,Context+Comment,OOF 조정,0,Type 1·2 짝,159,0.157233,
+TF-IDF LinearSVC,Context+Comment,기본,0,Type 1,167,0.185629,0.185629
+TF-IDF LinearSVC,Context+Comment,기본,0,Type 2,168,0.910714,0.089286
+TF-IDF LinearSVC,Context+Comment,기본,0,Type 3,255,1.0,0.0
+TF-IDF LinearSVC,Context+Comment,기본,0,Type 1·2 짝,159,0.144654,
+TF-IDF LinearSVC,Context+Comment,OOF 조정,0,Type 1,167,0.479042,0.479042
+TF-IDF LinearSVC,Context+Comment,OOF 조정,0,Type 2,168,0.613095,0.386905
+TF-IDF LinearSVC,Context+Comment,OOF 조정,0,Type 3,255,0.968627,0.031373
+TF-IDF LinearSVC,Context+Comment,OOF 조정,0,Type 1·2 짝,159,0.194969,
+TF-IDF LogReg,Context-only,기본,0,Type 1,167,0.245509,0.245509
+TF-IDF LogReg,Context-only,기본,0,Type 2,168,0.553571,0.446429
+TF-IDF LogReg,Context-only,기본,0,Type 3,255,0.411765,0.588235
+TF-IDF LogReg,Context-only,기본,0,Type 1·2 짝,159,0.069182,
+TF-IDF LogReg,Context-only,OOF 조정,0,Type 1,167,0.347305,0.347305
+TF-IDF LogReg,Context-only,OOF 조정,0,Type 2,168,0.505952,0.494048
+TF-IDF LogReg,Context-only,OOF 조정,0,Type 3,255,0.313725,0.686275
+TF-IDF LogReg,Context-only,OOF 조정,0,Type 1·2 짝,159,0.144654,
+TF-IDF LinearSVC,Context-only,기본,0,Type 1,167,0.203593,0.203593
+TF-IDF LinearSVC,Context-only,기본,0,Type 2,168,0.77381,0.22619
+TF-IDF LinearSVC,Context-only,기본,0,Type 3,255,0.917647,0.082353
+TF-IDF LinearSVC,Context-only,기본,0,Type 1·2 짝,159,0.069182,
+TF-IDF LinearSVC,Context-only,OOF 조정,0,Type 1,167,0.335329,0.335329
+TF-IDF LinearSVC,Context-only,OOF 조정,0,Type 2,168,0.553571,0.446429
+TF-IDF LinearSVC,Context-only,OOF 조정,0,Type 3,255,0.360784,0.639216
+TF-IDF LinearSVC,Context-only,OOF 조정,0,Type 1·2 짝,159,0.144654,
+TF-IDF LogReg,Comment-only,기본,1,Type 1,152,0.592105,0.592105
+TF-IDF LogReg,Comment-only,기본,1,Type 2,151,0.410596,0.589404
+TF-IDF LogReg,Comment-only,기본,1,Type 3,322,0.931677,0.068323
+TF-IDF LogReg,Comment-only,기본,1,Type 1·2 짝,146,0.0,
+TF-IDF LogReg,Comment-only,OOF 조정,1,Type 1,152,0.697368,0.697368
+TF-IDF LogReg,Comment-only,OOF 조정,1,Type 2,151,0.304636,0.695364
+TF-IDF LogReg,Comment-only,OOF 조정,1,Type 3,322,0.869565,0.130435
+TF-IDF LogReg,Comment-only,OOF 조정,1,Type 1·2 짝,146,0.0,
+TF-IDF LinearSVC,Comment-only,기본,1,Type 1,152,0.546053,0.546053
+TF-IDF LinearSVC,Comment-only,기본,1,Type 2,151,0.456954,0.543046
+TF-IDF LinearSVC,Comment-only,기본,1,Type 3,322,0.944099,0.055901
+TF-IDF LinearSVC,Comment-only,기본,1,Type 1·2 짝,146,0.0,
+TF-IDF LinearSVC,Comment-only,OOF 조정,1,Type 1,152,0.677632,0.677632
+TF-IDF LinearSVC,Comment-only,OOF 조정,1,Type 2,151,0.324503,0.675497
+TF-IDF LinearSVC,Comment-only,OOF 조정,1,Type 3,322,0.863354,0.136646
+TF-IDF LinearSVC,Comment-only,OOF 조정,1,Type 1·2 짝,146,0.0,
+TF-IDF LogReg,Context+Comment,기본,1,Type 1,152,0.348684,0.348684
+TF-IDF LogReg,Context+Comment,기본,1,Type 2,151,0.788079,0.211921
+TF-IDF LogReg,Context+Comment,기본,1,Type 3,322,0.990683,0.009317
+TF-IDF LogReg,Context+Comment,기본,1,Type 1·2 짝,146,0.143836,
+TF-IDF LogReg,Context+Comment,OOF 조정,1,Type 1,152,0.539474,0.539474
+TF-IDF LogReg,Context+Comment,OOF 조정,1,Type 2,151,0.609272,0.390728
+TF-IDF LogReg,Context+Comment,OOF 조정,1,Type 3,322,0.92236,0.07764
+TF-IDF LogReg,Context+Comment,OOF 조정,1,Type 1·2 짝,146,0.178082,
+TF-IDF LinearSVC,Context+Comment,기본,1,Type 1,152,0.315789,0.315789
+TF-IDF LinearSVC,Context+Comment,기본,1,Type 2,151,0.854305,0.145695
+TF-IDF LinearSVC,Context+Comment,기본,1,Type 3,322,0.984472,0.015528
+TF-IDF LinearSVC,Context+Comment,기본,1,Type 1·2 짝,146,0.184932,
+TF-IDF LinearSVC,Context+Comment,OOF 조정,1,Type 1,152,0.552632,0.552632
+TF-IDF LinearSVC,Context+Comment,OOF 조정,1,Type 2,151,0.695364,0.304636
+TF-IDF LinearSVC,Context+Comment,OOF 조정,1,Type 3,322,0.934783,0.065217
+TF-IDF LinearSVC,Context+Comment,OOF 조정,1,Type 1·2 짝,146,0.246575,
+TF-IDF LogReg,Context-only,기본,1,Type 1,152,0.072368,0.072368
+TF-IDF LogReg,Context-only,기본,1,Type 2,151,0.933775,0.066225
+TF-IDF LogReg,Context-only,기본,1,Type 3,322,0.89441,0.10559
+TF-IDF LogReg,Context-only,기본,1,Type 1·2 짝,146,0.061644,
+TF-IDF LogReg,Context-only,OOF 조정,1,Type 1,152,0.25,0.25
+TF-IDF LogReg,Context-only,OOF 조정,1,Type 2,151,0.788079,0.211921
+TF-IDF LogReg,Context-only,OOF 조정,1,Type 3,322,0.779503,0.220497
+TF-IDF LogReg,Context-only,OOF 조정,1,Type 1·2 짝,146,0.19863,
+TF-IDF LinearSVC,Context-only,기본,1,Type 1,152,0.046053,0.046053
+TF-IDF LinearSVC,Context-only,기본,1,Type 2,151,0.933775,0.066225
+TF-IDF LinearSVC,Context-only,기본,1,Type 3,322,0.944099,0.055901
+TF-IDF LinearSVC,Context-only,기본,1,Type 1·2 짝,146,0.034247,
+TF-IDF LinearSVC,Context-only,OOF 조정,1,Type 1,152,0.125,0.125
+TF-IDF LinearSVC,Context-only,OOF 조정,1,Type 2,151,0.927152,0.072848
+TF-IDF LinearSVC,Context-only,OOF 조정,1,Type 3,322,0.854037,0.145963
+TF-IDF LinearSVC,Context-only,OOF 조정,1,Type 1·2 짝,146,0.10274,
+TF-IDF LogReg,Comment-only,기본,2,Type 1,152,0.5,0.5
+TF-IDF LogReg,Comment-only,기본,2,Type 2,152,0.5,0.5
+TF-IDF LogReg,Comment-only,기본,2,Type 3,314,0.910828,0.089172
+TF-IDF LogReg,Comment-only,기본,2,Type 1·2 짝,147,0.0,
+TF-IDF LogReg,Comment-only,OOF 조정,2,Type 1,152,0.552632,0.552632
+TF-IDF LogReg,Comment-only,OOF 조정,2,Type 2,152,0.447368,0.552632
+TF-IDF LogReg,Comment-only,OOF 조정,2,Type 3,314,0.875796,0.124204
+TF-IDF LogReg,Comment-only,OOF 조정,2,Type 1·2 짝,147,0.0,
+TF-IDF LinearSVC,Comment-only,기본,2,Type 1,152,0.480263,0.480263
+TF-IDF LinearSVC,Comment-only,기본,2,Type 2,152,0.519737,0.480263
+TF-IDF LinearSVC,Comment-only,기본,2,Type 3,314,0.904459,0.095541
+TF-IDF LinearSVC,Comment-only,기본,2,Type 1·2 짝,147,0.0,
+TF-IDF LinearSVC,Comment-only,OOF 조정,2,Type 1,152,0.532895,0.532895
+TF-IDF LinearSVC,Comment-only,OOF 조정,2,Type 2,152,0.467105,0.532895
+TF-IDF LinearSVC,Comment-only,OOF 조정,2,Type 3,314,0.859873,0.140127
+TF-IDF LinearSVC,Comment-only,OOF 조정,2,Type 1·2 짝,147,0.0,
+TF-IDF LogReg,Context+Comment,기본,2,Type 1,152,0.309211,0.309211
+TF-IDF LogReg,Context+Comment,기본,2,Type 2,152,0.907895,0.092105
+TF-IDF LogReg,Context+Comment,기본,2,Type 3,314,0.974522,0.025478
+TF-IDF LogReg,Context+Comment,기본,2,Type 1·2 짝,147,0.217687,
+TF-IDF LogReg,Context+Comment,OOF 조정,2,Type 1,152,0.526316,0.526316
+TF-IDF LogReg,Context+Comment,OOF 조정,2,Type 2,152,0.75,0.25
+TF-IDF LogReg,Context+Comment,OOF 조정,2,Type 3,314,0.888535,0.111465
+TF-IDF LogReg,Context+Comment,OOF 조정,2,Type 1·2 짝,147,0.326531,
+TF-IDF LinearSVC,Context+Comment,기본,2,Type 1,152,0.230263,0.230263
+TF-IDF LinearSVC,Context+Comment,기본,2,Type 2,152,0.940789,0.059211
+TF-IDF LinearSVC,Context+Comment,기본,2,Type 3,314,0.984076,0.015924
+TF-IDF LinearSVC,Context+Comment,기본,2,Type 1·2 짝,147,0.156463,
+TF-IDF LinearSVC,Context+Comment,OOF 조정,2,Type 1,152,0.611842,0.611842
+TF-IDF LinearSVC,Context+Comment,OOF 조정,2,Type 2,152,0.730263,0.269737
+TF-IDF LinearSVC,Context+Comment,OOF 조정,2,Type 3,314,0.875796,0.124204
+TF-IDF LinearSVC,Context+Comment,OOF 조정,2,Type 1·2 짝,147,0.360544,
+TF-IDF LogReg,Context-only,기본,2,Type 1,152,0.164474,0.164474
+TF-IDF LogReg,Context-only,기본,2,Type 2,152,0.953947,0.046053
+TF-IDF LogReg,Context-only,기본,2,Type 3,314,0.742038,0.257962
+TF-IDF LogReg,Context-only,기본,2,Type 1·2 짝,147,0.170068,
+TF-IDF LogReg,Context-only,OOF 조정,2,Type 1,152,0.407895,0.407895
+TF-IDF LogReg,Context-only,OOF 조정,2,Type 2,152,0.914474,0.085526
+TF-IDF LogReg,Context-only,OOF 조정,2,Type 3,314,0.512739,0.487261
+TF-IDF LogReg,Context-only,OOF 조정,2,Type 1·2 짝,147,0.37415,
+TF-IDF LinearSVC,Context-only,기본,2,Type 1,152,0.111842,0.111842
+TF-IDF LinearSVC,Context-only,기본,2,Type 2,152,1.0,0.0
+TF-IDF LinearSVC,Context-only,기본,2,Type 3,314,0.996815,0.003185
+TF-IDF LinearSVC,Context-only,기본,2,Type 1·2 짝,147,0.115646,
+TF-IDF LinearSVC,Context-only,OOF 조정,2,Type 1,152,0.723684,0.723684
+TF-IDF LinearSVC,Context-only,OOF 조정,2,Type 2,152,0.881579,0.118421
+TF-IDF LinearSVC,Context-only,OOF 조정,2,Type 3,314,0.671975,0.328025
+TF-IDF LinearSVC,Context-only,OOF 조정,2,Type 1·2 짝,147,0.693878,
+TF-IDF LogReg,Comment-only,기본,3,Type 1,146,0.5,0.5
+TF-IDF LogReg,Comment-only,기본,3,Type 2,146,0.5,0.5
+TF-IDF LogReg,Comment-only,기본,3,Type 3,297,0.949495,0.050505
+TF-IDF LogReg,Comment-only,기본,3,Type 1·2 짝,139,0.0,
+TF-IDF LogReg,Comment-only,OOF 조정,3,Type 1,146,0.554795,0.554795
+TF-IDF LogReg,Comment-only,OOF 조정,3,Type 2,146,0.445205,0.554795
+TF-IDF LogReg,Comment-only,OOF 조정,3,Type 3,297,0.912458,0.087542
+TF-IDF LogReg,Comment-only,OOF 조정,3,Type 1·2 짝,139,0.0,
+TF-IDF LinearSVC,Comment-only,기본,3,Type 1,146,0.472603,0.472603
+TF-IDF LinearSVC,Comment-only,기본,3,Type 2,146,0.527397,0.472603
+TF-IDF LinearSVC,Comment-only,기본,3,Type 3,297,0.962963,0.037037
+TF-IDF LinearSVC,Comment-only,기본,3,Type 1·2 짝,139,0.0,
+TF-IDF LinearSVC,Comment-only,OOF 조정,3,Type 1,146,0.59589,0.59589
+TF-IDF LinearSVC,Comment-only,OOF 조정,3,Type 2,146,0.40411,0.59589
+TF-IDF LinearSVC,Comment-only,OOF 조정,3,Type 3,297,0.919192,0.080808
+TF-IDF LinearSVC,Comment-only,OOF 조정,3,Type 1·2 짝,139,0.0,
+TF-IDF LogReg,Context+Comment,기본,3,Type 1,146,0.30137,0.30137
+TF-IDF LogReg,Context+Comment,기본,3,Type 2,146,0.90411,0.09589
+TF-IDF LogReg,Context+Comment,기본,3,Type 3,297,0.986532,0.013468
+TF-IDF LogReg,Context+Comment,기본,3,Type 1·2 짝,139,0.201439,
+TF-IDF LogReg,Context+Comment,OOF 조정,3,Type 1,146,0.486301,0.486301
+TF-IDF LogReg,Context+Comment,OOF 조정,3,Type 2,146,0.739726,0.260274
+TF-IDF LogReg,Context+Comment,OOF 조정,3,Type 3,297,0.86532,0.13468
+TF-IDF LogReg,Context+Comment,OOF 조정,3,Type 1·2 짝,139,0.215827,
+TF-IDF LinearSVC,Context+Comment,기본,3,Type 1,146,0.232877,0.232877
+TF-IDF LinearSVC,Context+Comment,기본,3,Type 2,146,0.917808,0.082192
+TF-IDF LinearSVC,Context+Comment,기본,3,Type 3,297,0.996633,0.003367
+TF-IDF LinearSVC,Context+Comment,기본,3,Type 1·2 짝,139,0.151079,
+TF-IDF LinearSVC,Context+Comment,OOF 조정,3,Type 1,146,0.575342,0.575342
+TF-IDF LinearSVC,Context+Comment,OOF 조정,3,Type 2,146,0.726027,0.273973
+TF-IDF LinearSVC,Context+Comment,OOF 조정,3,Type 3,297,0.885522,0.114478
+TF-IDF LinearSVC,Context+Comment,OOF 조정,3,Type 1·2 짝,139,0.28777,
+TF-IDF LogReg,Context-only,기본,3,Type 1,146,0.068493,0.068493
+TF-IDF LogReg,Context-only,기본,3,Type 2,146,0.986301,0.013699
+TF-IDF LogReg,Context-only,기본,3,Type 3,297,0.79798,0.20202
+TF-IDF LogReg,Context-only,기본,3,Type 1·2 짝,139,0.057554,
+TF-IDF LogReg,Context-only,OOF 조정,3,Type 1,146,0.191781,0.191781
+TF-IDF LogReg,Context-only,OOF 조정,3,Type 2,146,0.90411,0.09589
+TF-IDF LogReg,Context-only,OOF 조정,3,Type 3,297,0.558923,0.441077
+TF-IDF LogReg,Context-only,OOF 조정,3,Type 1·2 짝,139,0.158273,
+TF-IDF LinearSVC,Context-only,기본,3,Type 1,146,0.068493,0.068493
+TF-IDF LinearSVC,Context-only,기본,3,Type 2,146,0.986301,0.013699
+TF-IDF LinearSVC,Context-only,기본,3,Type 3,297,0.79798,0.20202
+TF-IDF LinearSVC,Context-only,기본,3,Type 1·2 짝,139,0.057554,
+TF-IDF LinearSVC,Context-only,OOF 조정,3,Type 1,146,0.267123,0.267123
+TF-IDF LinearSVC,Context-only,OOF 조정,3,Type 2,146,0.972603,0.027397
+TF-IDF LinearSVC,Context-only,OOF 조정,3,Type 3,297,0.707071,0.292929
+TF-IDF LinearSVC,Context-only,OOF 조정,3,Type 1·2 짝,139,0.266187,
+TF-IDF LogReg,Comment-only,기본,4,Type 1,147,0.557823,0.557823
+TF-IDF LogReg,Comment-only,기본,4,Type 2,147,0.442177,0.557823
+TF-IDF LogReg,Comment-only,기본,4,Type 3,284,0.96831,0.03169
+TF-IDF LogReg,Comment-only,기본,4,Type 1·2 짝,146,0.0,
+TF-IDF LogReg,Comment-only,OOF 조정,4,Type 1,147,0.591837,0.591837
+TF-IDF LogReg,Comment-only,OOF 조정,4,Type 2,147,0.408163,0.591837
+TF-IDF LogReg,Comment-only,OOF 조정,4,Type 3,284,0.950704,0.049296
+TF-IDF LogReg,Comment-only,OOF 조정,4,Type 1·2 짝,146,0.0,
+TF-IDF LinearSVC,Comment-only,기본,4,Type 1,147,0.517007,0.517007
+TF-IDF LinearSVC,Comment-only,기본,4,Type 2,147,0.482993,0.517007
+TF-IDF LinearSVC,Comment-only,기본,4,Type 3,284,0.971831,0.028169
+TF-IDF LinearSVC,Comment-only,기본,4,Type 1·2 짝,146,0.0,
+TF-IDF LinearSVC,Comment-only,OOF 조정,4,Type 1,147,0.55102,0.55102
+TF-IDF LinearSVC,Comment-only,OOF 조정,4,Type 2,147,0.44898,0.55102
+TF-IDF LinearSVC,Comment-only,OOF 조정,4,Type 3,284,0.964789,0.035211
+TF-IDF LinearSVC,Comment-only,OOF 조정,4,Type 1·2 짝,146,0.0,
+TF-IDF LogReg,Context+Comment,기본,4,Type 1,147,0.292517,0.292517
+TF-IDF LogReg,Context+Comment,기본,4,Type 2,147,0.863946,0.136054
+TF-IDF LogReg,Context+Comment,기본,4,Type 3,284,0.989437,0.010563
+TF-IDF LogReg,Context+Comment,기본,4,Type 1·2 짝,146,0.178082,
+TF-IDF LogReg,Context+Comment,OOF 조정,4,Type 1,147,0.530612,0.530612
+TF-IDF LogReg,Context+Comment,OOF 조정,4,Type 2,147,0.687075,0.312925
+TF-IDF LogReg,Context+Comment,OOF 조정,4,Type 3,284,0.90493,0.09507
+TF-IDF LogReg,Context+Comment,OOF 조정,4,Type 1·2 짝,146,0.239726,
+TF-IDF LinearSVC,Context+Comment,기본,4,Type 1,147,0.285714,0.285714
+TF-IDF LinearSVC,Context+Comment,기본,4,Type 2,147,0.945578,0.054422
+TF-IDF LinearSVC,Context+Comment,기본,4,Type 3,284,0.996479,0.003521
+TF-IDF LinearSVC,Context+Comment,기본,4,Type 1·2 짝,146,0.226027,
+TF-IDF LinearSVC,Context+Comment,OOF 조정,4,Type 1,147,0.482993,0.482993
+TF-IDF LinearSVC,Context+Comment,OOF 조정,4,Type 2,147,0.755102,0.244898
+TF-IDF LinearSVC,Context+Comment,OOF 조정,4,Type 3,284,0.933099,0.066901
+TF-IDF LinearSVC,Context+Comment,OOF 조정,4,Type 1·2 짝,146,0.246575,
+TF-IDF LogReg,Context-only,기본,4,Type 1,147,0.258503,0.258503
+TF-IDF LogReg,Context-only,기본,4,Type 2,147,0.870748,0.129252
+TF-IDF LogReg,Context-only,기본,4,Type 3,284,0.883803,0.116197
+TF-IDF LogReg,Context-only,기본,4,Type 1·2 짝,146,0.143836,
+TF-IDF LogReg,Context-only,OOF 조정,4,Type 1,147,0.639456,0.639456
+TF-IDF LogReg,Context-only,OOF 조정,4,Type 2,147,0.755102,0.244898
+TF-IDF LogReg,Context-only,OOF 조정,4,Type 3,284,0.433099,0.566901
+TF-IDF LogReg,Context-only,OOF 조정,4,Type 1·2 짝,146,0.431507,
+TF-IDF LinearSVC,Context-only,기본,4,Type 1,147,0.251701,0.251701
+TF-IDF LinearSVC,Context-only,기본,4,Type 2,147,0.897959,0.102041
+TF-IDF LinearSVC,Context-only,기본,4,Type 3,284,0.897887,0.102113
+TF-IDF LinearSVC,Context-only,기본,4,Type 1·2 짝,146,0.150685,
+TF-IDF LinearSVC,Context-only,OOF 조정,4,Type 1,147,0.646259,0.646259
+TF-IDF LinearSVC,Context-only,OOF 조정,4,Type 2,147,0.795918,0.204082
+TF-IDF LinearSVC,Context-only,OOF 조정,4,Type 3,284,0.440141,0.559859
+TF-IDF LinearSVC,Context-only,OOF 조정,4,Type 1·2 짝,146,0.486301,

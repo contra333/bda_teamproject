@@ -2,5 +2,5 @@ hooks/* text eol=lf
 *.py text eol=lf
 *.md text eol=lf
 
-# 제공 CSV의 원본 바이트 해시를 checkout 환경과 무관하게 보존
-/results/midterm/provided/* -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# 결과 CSV의 줄바꿈을 실행 환경과 무관하게 통일
+/results/*.csv text eol=lf

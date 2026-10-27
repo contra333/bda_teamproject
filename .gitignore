@@ -40,8 +40,6 @@ models/
 # Large result dumps (표·작은 csv는 results/에 커밋 가능)
 results/**/*.pkl
 results/**/*.joblib
-# 팀 제공 결과와 대조할 로컬 재실행본
-/results/midterm/reproduced/
 # 개인 작성 문서는 제외하되, 팀의 최종 중간보고서는 공유한다
 *.docx
 !/docs/중간보고서_수수컴정.docx

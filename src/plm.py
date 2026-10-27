@@ -4,7 +4,7 @@
     "baseline.py 와 같은 5-fold(cv_splits)에서 한국어 PLM 두 개를 (a) 고정 임베딩 + LogReg,
      (b) 전체 fine-tuning, (c) LoRA(PEFT) 세 방식으로 돌려, 맥락을 넣었을 때의 차이와 방식별 비용을 잰다."
 
-모델 (models/ 아래에 미리 받아 둠, 실행 중에는 내려받지 않음)
+모델 (model/ 아래에 미리 받아 둠, 실행 중에는 내려받지 않음)
     - KcELECTRA-base-v2022 (beomi) : 네이버 뉴스 댓글로 사전학습 → 온라인 댓글 특화
     - klue-roberta-base   (klue)  : 뉴스·위키 등 일반 한국어로 사전학습
 
@@ -33,9 +33,9 @@
     - CUDA(Colab)에서는 fp16 autocast, Apple MPS·CPU에서는 fp32.
 
 터미널에서 실행
-    python -m src.midterm.plm                                    # 전부: 2모델 × 3방식 × 2조건 × 5fold = 60개
-    python -m src.midterm.plm --methods frozen                   # 고정 임베딩만 (빠름)
-    python -m src.midterm.plm --models klue-roberta-base --folds 0 --methods lora   # 시간 측정용
+    python src/plm.py                                    # 전부: 2모델 × 3방식 × 2조건 × 5fold = 60개
+    python src/plm.py --methods frozen                   # 고정 임베딩만 (빠름)
+    python src/plm.py --models klue-roberta-base --folds 0 --methods lora   # 시간 측정용
 """
 import argparse
 import atexit
@@ -44,7 +44,7 @@ import os
 import time
 from datetime import date
 
-os.environ["HF_HUB_OFFLINE"] = "1"  # models/ 에 받아 둔 파일만 쓴다
+os.environ["HF_HUB_OFFLINE"] = "1"  # model/ 에 받아 둔 파일만 쓴다
 os.environ["TRANSFORMERS_OFFLINE"] = "1"
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -57,18 +57,18 @@ from sklearn.metrics import accuracy_score, f1_score, recall_score
 from transformers import AutoModel, AutoModelForSequenceClassification, AutoTokenizer, get_linear_schedule_with_warmup
 from transformers.utils import logging as hf_logging
 
-from .preprocess import RESULT_DIR, ROOT, SEED, cv_splits, get_xy
+from preprocess import ROOT, SEED, cv_splits, get_xy
 
 hf_logging.set_verbosity_error()
 
 MODELS = {
-    "KcELECTRA-base-v2022": ROOT / "models" / "KcELECTRA-base-v2022",
-    "klue-roberta-base": ROOT / "models" / "klue-roberta-base",
+    "KcELECTRA-base-v2022": ROOT / "model" / "KcELECTRA-base-v2022",
+    "klue-roberta-base": ROOT / "model" / "klue-roberta-base",
 }
 METHODS = ["frozen", "finetune", "lora"]
 CONDITIONS = {"Comment-only": False, "Context+Comment": True}  # 조건 이름 → get_xy 의 use_context
 METRICS = ["accuracy", "macro_f1", "recall_hate"]
-OUT_CSV = RESULT_DIR / "plm_folds.csv"
+OUT_CSV = ROOT / "results" / "plm_folds.csv"
 
 MAX_LEN = 128
 EPOCHS, BATCH, WARMUP, WEIGHT_DECAY = 3, 32, 0.1, 0.01
@@ -324,12 +324,11 @@ def log_row():
 
 # ───────────────────────────── 터미널에서 직접 실행할 때 ─────────────────────────────
 if __name__ == "__main__":
-    RESULT_DIR.mkdir(parents=True, exist_ok=True)
     parser = argparse.ArgumentParser()
     parser.add_argument("--models", nargs="+", default=list(MODELS), choices=list(MODELS))
     parser.add_argument("--methods", nargs="+", default=METHODS, choices=METHODS)
     parser.add_argument("--folds", nargs="+", type=int, default=[0, 1, 2, 3, 4])
-    parser.add_argument("--out", default=None, help="결과 CSV 경로 (기본 results/midterm/reproduced/plm_folds.csv)")
+    parser.add_argument("--out", default=None, help="결과 CSV 경로 (기본 results/plm_folds.csv)")
     args = parser.parse_args()
     if args.out:
         OUT_CSV = ROOT / args.out
@@ -340,8 +339,9 @@ if __name__ == "__main__":
     print(f"seed = {SEED}, device = {device}")
     for name in args.models:
         if not (MODELS[name] / "config.json").exists():
-            raise FileNotFoundError(f"{MODELS[name]} 가 없습니다. models/ 에 먼저 받아 두세요.")
+            raise FileNotFoundError(f"{MODELS[name]} 가 없습니다. model/ 에 먼저 받아 두세요.")
 
+    OUT_CSV.parent.mkdir(parents=True, exist_ok=True)
     if OUT_CSV.exists():
         print(f"알림: {OUT_CSV.relative_to(ROOT)} 이(가) 이미 있어 덮어씁니다.")
     folds = [(f, tr, te) for f, tr, te, _ in cv_splits() if f in args.folds]

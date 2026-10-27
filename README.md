@@ -8,7 +8,7 @@ KOCOH v2 3,000행을 사용한다. 같은 Context를 공유하는 Set을 77개 �
 
 ## 코드와 결과
 
-안지수 님이 전달한 통합본을 기준으로 한다. 실행 출력이 저장된 노트북 두 개에서 분석 과정과 해석을 확인할 수 있다.
+EDA와 모델 비교 노트북에 실행 결과와 해석을 함께 저장했다.
 
 | 내용 | 코드·노트북 | 결과 파일 |
 |---|---|---|
@@ -24,10 +24,11 @@ EDA 노트북의 train 2,410행 / test 590행은 첫 fold 예시다. 분할표 1
 
 ## 실행
 
-Python 3.12 환경에서 저장소 루트를 기준으로 실행한다. 이 PC에서는 WSL Ubuntu-24.04의 `~/envs/research` 환경을 사용한다.
+Python 3.12와 `requirements.txt`의 패키지를 사용한다. 아래 명령은 저장소 루트에서 실행하며, 가상환경 생성·활성화 예시는 Linux/WSL의 Bash 기준이다. CPU 기준선은 Ubuntu 24.04에서 실행을 확인했다.
 
 ```bash
-source ~/envs/research/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate
 python -m pip install -r requirements.txt
 export OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2
 python -m src.download_data
@@ -38,11 +39,11 @@ python src/baseline.py
 
 전처리 명령은 EDA 그림 3개를, 기준선 명령은 `results/`의 CPU 결과 CSV 5개를 갱신한다. 노트북은 같은 환경의 커널로 위에서부터 실행한다. 분할만 확인하려면 `python src/preprocess.py --inner`를 사용한다.
 
-PLM CSV는 팀원이 제공한 탐색 실행 결과다. 모델 비교 노트북은 기본적으로 저장된 PLM 결과를 읽으며, `RUN_TRAINING=False`, `CHECK_MODEL_TOKENS=False`로 되어 있다. PLM 재학습에는 별도로 torch·transformers·peft와 모델 가중치가 필요하다.
+`plm_folds.csv`는 Apple GPU(MPS, fp32)에서 측정한 PLM 탐색 결과 60행이다. 모델 비교 노트북은 기본적으로 저장된 PLM 결과를 읽으며, `RUN_TRAINING=False`, `CHECK_MODEL_TOKENS=False`로 되어 있다. PLM 재학습에는 별도로 torch·transformers·peft와 모델 가중치가 필요하다.
 
 ## 보고서와 연구 기록
 
 - 9주차: [중간보고서](docs/중간보고서_수수컴정.docx) · [발표자료](docs/중간발표_수정본.pptx)
 - Notion: [연구관리](https://app.notion.com/p/bda0538d38d3837793b3016b2d21c682) · [실험로그](https://www.notion.so/4050538d38d3817cb014d68a07e4a72d)
 - 다음 일정: 발표자료 기준 10주차 seed 3회 반복, 11주차 결과 분석.
-- 협업: [팀 규약](TEAM.md). 처음 받은 PC에서는 `git config core.hooksPath hooks`를 설정한다.
+- 협업: [팀 규약](TEAM.md). 저장소를 복제한 뒤 `git config core.hooksPath hooks`를 설정한다.

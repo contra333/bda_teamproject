@@ -6,12 +6,12 @@
 - 출처: https://huggingface.co/datasets/E-Park/KOCOH
 - 원본 설명: https://github.com/eparkatgithub/KOCOH
 - 논문: Park & Song (2026), https://aclanthology.org/2026.lrec-1.324/
-- 라이선스 표기: Hugging Face CC BY-NC 4.0 / GitHub README TBD (2026-10-12 확인). 출처를 표시하고 비영리 수업 연구에 사용한다. 표기 차이는 임의로 해소했다고 주장하지 않는다.
+- 라이선스 표기: Hugging Face CC BY-NC 4.0 / GitHub README TBD (2026-10-12 확인). 출처를 표시하고 비영리 수업 연구에 사용한다. 두 출처의 라이선스 표기가 달라 추가 확인이 필요하다.
 - 규모: 3,000행 × 18열, 101개 Set. 1행은 Context–Comment 쌍이다.
 - 고정 revision: `c26d8e86f3d7a9a6dcd4e308cb747b6bc6427d6f`
 - SHA256: `d5eb3c7bb4fd97471bd77efd9eb7f98ebc162151ef9725e821510551a4485a38`
 
-프로젝트 루트에서 `python -m src.download_data`를 실행한다. 이 PC는 WSL Ubuntu-24.04의 `~/envs/research/bin/python`을 사용한다. `data/KOCOH_v.2.csv`와 버전·해시를 담은 `data/provenance.json`을 저장한다. 기존 원본의 해시가 다르면 덮어쓰지 않고 중단한다.
+프로젝트 루트에서 `python -m src.download_data`를 실행한다. `data/KOCOH_v.2.csv`와 버전·해시를 담은 `data/provenance.json`을 저장한다. 기존 원본의 해시가 다르면 덮어쓰지 않고 중단한다.
 
 ## 분할과 모델 입력
 

@@ -68,7 +68,7 @@ MODELS = {
 METHODS = ["frozen", "finetune", "lora"]
 CONDITIONS = {"Comment-only": False, "Context+Comment": True}  # 조건 이름 → get_xy 의 use_context
 METRICS = ["accuracy", "macro_f1", "recall_hate"]
-OUT_CSV = ROOT / "results" / "plm_folds.csv"
+OUT_CSV = ROOT / "logs" / "plm_folds.csv"
 
 MAX_LEN = 128
 EPOCHS, BATCH, WARMUP, WEIGHT_DECAY = 3, 32, 0.1, 0.01
@@ -211,11 +211,13 @@ def run_frozen(name, folds, device):
 
 
 # ───────────────────────────── (b) 전체 fine-tuning / (c) LoRA ─────────────────────────────
-def finetune_one(model_dir, train, test, use_context, device, method="finetune", seed=SEED):
+def finetune_one(model_dir, train, test, use_context, device, method="finetune", seed=SEED, extra_tests=None):
     """fold 하나를 학습하고 (정답, test 예측, 비용 정보) 를 돌려준다. 하이퍼파라미터는 고정값만 쓴다.
 
     method="finetune": 모델 전체 학습
     method="lora"    : 원래 가중치는 고정, query·value 의 LoRA 행렬과 분류 헤드만 학습
+    extra_tests      : {이름: df} — 학습이 끝난 같은 모델로 추가 입력(예: Context 를 바꿔 끼운 test)의
+                       혐오 확률을 구해 info["extra_proba"][이름] 에 담는다. 학습에는 쓰지 않는다.
     """
     set_seed(seed)
     tok = AutoTokenizer.from_pretrained(model_dir)
@@ -274,6 +276,16 @@ def finetune_one(model_dir, train, test, use_context, device, method="finetune",
         for b in batches(enc_te, np.arange(len(y_te)), tok, device):
             with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=use_amp):
                 preds.append(model(**b).logits.argmax(-1).cpu().numpy())
+    extra_proba = {}
+    with torch.no_grad():
+        for key, df in (extra_tests or {}).items():
+            x_first, x_second, _ = texts(df, use_context)
+            enc_x = encode(tok, x_first, x_second, model.config)
+            probs = []
+            for b in batches(enc_x, np.arange(len(x_first)), tok, device):
+                with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=use_amp):
+                    probs.append(torch.softmax(model(**b).logits.float(), dim=-1)[:, 1].cpu().numpy())
+            extra_proba[key] = np.concatenate(probs)
     del model, opt
     if device.type == "cuda":
         torch.cuda.empty_cache()
@@ -287,6 +299,8 @@ def finetune_one(model_dir, train, test, use_context, device, method="finetune",
         "peak_mem_mb": round(peak, 1),
         "train_loss": round(float(np.mean(losses)), 4),  # 마지막 epoch 평균 (학습이 수렴했는지 확인용, test 와 무관)
     }
+    if extra_tests:
+        info["extra_proba"] = extra_proba
     return y_te, np.concatenate(preds), info
 
 
@@ -328,7 +342,7 @@ if __name__ == "__main__":
     parser.add_argument("--models", nargs="+", default=list(MODELS), choices=list(MODELS))
     parser.add_argument("--methods", nargs="+", default=METHODS, choices=METHODS)
     parser.add_argument("--folds", nargs="+", type=int, default=[0, 1, 2, 3, 4])
-    parser.add_argument("--out", default=None, help="결과 CSV 경로 (기본 results/plm_folds.csv)")
+    parser.add_argument("--out", default=None, help="결과 CSV 경로 (기본 logs/plm_folds.csv)")
     args = parser.parse_args()
     if args.out:
         OUT_CSV = ROOT / args.out
@@ -341,7 +355,6 @@ if __name__ == "__main__":
         if not (MODELS[name] / "config.json").exists():
             raise FileNotFoundError(f"{MODELS[name]} 가 없습니다. model/ 에 먼저 받아 두세요.")
 
-    OUT_CSV.parent.mkdir(parents=True, exist_ok=True)
     if OUT_CSV.exists():
         print(f"알림: {OUT_CSV.relative_to(ROOT)} 이(가) 이미 있어 덮어씁니다.")
     folds = [(f, tr, te) for f, tr, te, _ in cv_splits() if f in args.folds]

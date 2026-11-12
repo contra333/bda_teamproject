@@ -68,7 +68,7 @@ MODELS = {
 METHODS = ["frozen", "finetune", "lora"]
 CONDITIONS = {"Comment-only": False, "Context+Comment": True}  # 조건 이름 → get_xy 의 use_context
 METRICS = ["accuracy", "macro_f1", "recall_hate"]
-OUT_CSV = ROOT / "logs" / "plm_folds.csv"
+OUT_CSV = ROOT / "results" / "plm_folds.csv"
 
 MAX_LEN = 128
 EPOCHS, BATCH, WARMUP, WEIGHT_DECAY = 3, 32, 0.1, 0.01

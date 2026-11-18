@@ -1,4 +1,4 @@
-"""평가: plm.py 가 남긴 행별 점수 파일만 읽어 지표와 판정을 낸다. 학습은 하지 않는다.
+"""평가: plm.py 가 남긴 행별 점수로 지표와 판정을 낸다.
 
 읽는 파일
     results/<이름>_preds.csv — 열: model, method, condition, seed, fold, Index, y, score[, variant]
@@ -7,8 +7,8 @@
 
 조건
     댓글만 / 글만 / 점수 덧셈 / 따로 읽기 / 같이 읽기 — 파일에 있는 조건만 계산한다.
-    점수 덧셈은 댓글만·글만 점수를 LogReg 로 결합한 값이다 (학습 없음). fold k 의 가중치는 나머지 fold 의
-    test 점수로만 맞춘다 (fold k 의 정답은 쓰지 않음). 맥락과 댓글을 전혀 섞지 않고 올릴 수 있는 몫을 보여 준다.
+    점수 덧셈은 댓글만·글만 점수를 LogReg 로 결합한 값이다. 각 outer fold 의 train 내부 OOF 점수로만
+    결합기를 학습하고 같은 outer fold 의 test 점수에 적용한다. 두 조건의 내부 점수가 필요하다.
 
 임계값 규칙 (혼동행렬·TPR·FPR·macro-F1 은 임계값에 따라 달라진다)
     기본          : score > 0 (확률 0.5). 가설 1·2 발표 수치와 같은 판정이다.
@@ -104,22 +104,58 @@ def load_inner(path, model, method="finetune"):
     return q[n == n.max()] if len(q) else q
 
 
-def add_score_sum(p):
-    """댓글만·글만 점수의 결합. 조건 하나가 없으면 만들지 않는다."""
-    own = p[p["variant"] == "own"]  # 바꿔 끼운 입력은 쓰지 않는다
-    if not {COMMENT, CONTEXT} <= set(own["condition"]):
+def paired_score_inputs(rows, expected, keys, label):
+    """같은 행의 두 조건 점수를 짝짓고 기록된 분할의 행을 모두 확인한다."""
+    if rows.duplicated(keys + ["condition"]).any():
+        raise ValueError(f"{label}: 점수 행이 중복됩니다")
+    paired = rows.pivot(index=keys + ["y"], columns="condition", values="score")
+    paired = paired.reindex(columns=[COMMENT, CONTEXT]).reset_index()
+    actual_keys = set(paired[keys].itertuples(index=False, name=None))
+    expected_keys = set(expected[keys].itertuples(index=False, name=None))
+    if len(paired) != len(expected) or actual_keys != expected_keys:
+        raise ValueError(f"{label}: 분할 기록과 행 또는 내부 fold가 다릅니다")
+    if (not paired["y"].isin([0, 1]).all()
+            or not np.isfinite(paired[[COMMENT, CONTEXT]].to_numpy()).all()):
+        raise ValueError(f"{label}: 두 조건의 점수와 정답이 모두 필요합니다")
+    return paired
+
+
+def add_score_sum(p, inner=None, split=None):
+    """outer fold별 내부 OOF 점수로 결합기를 맞추고 해당 test 점수에 적용한다."""
+    sources = [COMMENT, CONTEXT]
+    p = p[p["condition"] != SUM]
+    own = p[(p["variant"] == "own") & p["condition"].isin(sources)]
+    if not set(sources) <= set(own["condition"]):
         return p
-    w = own[own["condition"].isin([COMMENT, CONTEXT])].pivot(
-        index=["seed", "fold", "Index", "y", "Type", "Comment"], columns="condition", values="score").dropna().reset_index()
+    if inner is None or not set(sources) <= set(inner["condition"]):
+        print("점수 덧셈 생략: 댓글만·글만 두 조건의 내부 validation 점수가 필요합니다.")
+        return p
+    if split is None:
+        raise ValueError("점수 덧셈에는 기준 분할 기록(split_assignment.csv)이 필요합니다")
+    if split.duplicated(["outer_fold", "Index"]).any():
+        raise ValueError("기준 분할 기록에 중복 행이 있습니다")
+
+    inner = inner[inner["condition"].isin(sources)]
+    split_folds = {fold: assignment for fold, assignment in split.groupby("outer_fold")}
     out = []
-    for _, g in w.groupby("seed"):
-        for fold in sorted(g["fold"].unique()):
-            fit, ap = g[g["fold"] != fold], g[g["fold"] == fold]
-            if fit.empty:
-                continue
-            clf = LogisticRegression(class_weight="balanced").fit(fit[[COMMENT, CONTEXT]], fit["y"])
-            out.append(ap.assign(condition=SUM, variant="own", score=clf.decision_function(ap[[COMMENT, CONTEXT]])))
-    return pd.concat([p] + [o[COLS] for o in out], ignore_index=True) if out else p
+    for seed, outer_scores in own.groupby("seed"):
+        if not set(outer_scores["fold"]) <= set(split_folds):
+            raise ValueError(f"seed {seed}: test 점수의 fold가 기준 분할 기록과 다릅니다")
+        seed_inner = inner[inner["seed"] == seed]
+        for fold, outer_test in outer_scores.groupby("fold"):
+            assignment = split_folds[fold]
+            label = f"점수 덧셈 seed {seed}, fold {fold}"
+            train_rows = assignment[assignment["role"] == "train"].rename(
+                columns={"inner_val_fold": "inner_fold"})
+            test_rows = assignment[assignment["role"] == "test"]
+            fit = paired_score_inputs(seed_inner[seed_inner["fold"] == fold],
+                                      train_rows, ["inner_fold", "Index"], f"{label} train")
+            apply = paired_score_inputs(outer_test, test_rows, ["Index"], f"{label} test")
+            clf = LogisticRegression(class_weight="balanced").fit(fit[sources], fit["y"])
+            metadata = outer_test[outer_test["condition"] == COMMENT].set_index("Index")
+            out.append(metadata.loc[apply["Index"]].reset_index().assign(
+                condition=SUM, score=clf.decision_function(apply[sources])))
+    return pd.concat([p, *out], ignore_index=True)
 
 
 # ───────────────────────────── 지표 ─────────────────────────────
@@ -321,7 +357,7 @@ if __name__ == "__main__":
     parser.add_argument("--model", default="KcELECTRA-base-v2022")
     parser.add_argument("--method", default="finetune", choices=["finetune", "lora"])
     parser.add_argument("--name", default=None, help="결과 파일 접두사 (기본: plm_h1_preds.csv → h1)")
-    parser.add_argument("--inner", default=None, help="train 내부 validation 점수 (기본: <preds 이름>_inner_preds.csv 가 있으면 사용)")
+    parser.add_argument("--inner", default=None, help="점수 덧셈 및 임계값 선택에 쓰는 내부 validation 점수 (기본: <preds 이름>_inner_preds.csv)")
     args = parser.parse_args()
     path = ROOT / args.preds
     name = args.name or path.stem.removeprefix("plm_").removesuffix("_preds")
@@ -330,7 +366,8 @@ if __name__ == "__main__":
     inner = load_inner(inner_path, args.model, args.method) if inner_path.exists() else None
     print(f"내부 validation 점수: {inner_path.name if inner is not None else '없음 → OOF 조정 행은 내지 않는다'}\n")
 
-    p = add_score_sum(load(path, args.model, args.method))
+    split = pd.read_csv(SPLIT_CSV) if inner is not None and SPLIT_CSV.exists() else None
+    p = add_score_sum(load(path, args.model, args.method), inner=inner, split=split)
     own = p[p["variant"] == "own"]
     done = own.groupby(["condition", "seed"])["fold"].nunique().unstack()
     print("조건별 끝난 fold 수 (열 = seed)\n", done.to_string(), "\n")

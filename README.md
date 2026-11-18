@@ -60,7 +60,7 @@ python src/baseline.py
 
 ## PLM 실험
 
-학습은 `src/plm.py`, 평가는 `src/evaluate.py`가 맡는다. `plm.py`가 test 행마다 점수를 파일로 남기고, `evaluate.py`는 그 파일만 읽어 표를 만든다. 그래서 지표를 추가하거나 임계값을 바꿀 때 다시 학습하지 않아도 된다.
+학습은 `src/plm.py`, 평가는 `src/evaluate.py`가 맡는다. `plm.py`가 test 행마다 점수를 파일로 남기고, `evaluate.py`는 그 파일만 읽어 표를 만든다. 그래서 지표를 추가하거나 임계값을 바꿀 때 다시 학습하지 않아도 된다. 점수 덧셈 조건은 각 fold의 train 안에서 만든 내부 validation 점수로 결합 비율을 정하므로, 2번 단계의 점수가 있어야 계산된다.
 
 ### 실행
 
@@ -68,10 +68,10 @@ python src/baseline.py
 # 1. 학습: 가설 1의 네 조건, seed 3개. 끊기면 같은 명령을 다시 실행한다 (끝난 학습은 건너뜀)
 python src/plm.py --models KcELECTRA-base-v2022 --methods finetune --out results/plm_h1.csv --resume     --seeds 42 43 44 --conditions Comment-only Context+Comment Context-only Bi-encoder
 
-# 2. (선택) 임계값 선택용 내부 validation 점수
+# 2. 점수 덧셈과 임계값 선택에 쓰는 내부 validation 점수
 python src/plm.py --models KcELECTRA-base-v2022 --methods finetune --out results/plm_h1.csv --inner     --seeds 42 43 44 --conditions Comment-only Context+Comment Context-only Bi-encoder
 
-# 3. 평가: 학습 없이 몇 초면 끝난다
+# 3. 평가: PLM 학습 없이 몇 초면 끝난다
 python src/evaluate.py --preds results/plm_h1_preds.csv
 ```
 
@@ -83,7 +83,7 @@ python src/evaluate.py --preds results/plm_h1_preds.csv
 |---|---|---|
 | `results/plm_h1.csv` | 학습 한 번마다의 점수, 학습 시간, 메모리, 기기 | 1 |
 | `results/plm_h1_preds.csv` | test 행별 점수. `score`가 0보다 크면 혐오 (혐오 logit − 비혐오 logit) | 1 |
-| `results/plm_h1_inner_preds.csv` | 내부 validation 행별 점수 | 2 |
+| `results/plm_h1_inner_preds.csv` | 내부 validation 행별 점수 (점수 덧셈, 임계값 선택에 사용) | 2 |
 | `results/h1_summary.csv` | 조건별 요약 (macro-F1, TPR, FPR, AUROC, PR-AUC, 혼동행렬, 짝 정답률) | 3 |
 | `results/h1_folds.csv` | fold별 지표 | 3 |
 | `results/h1_tests.csv` | 조건 간 비교 판정 | 3 |

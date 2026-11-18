@@ -14,7 +14,7 @@ src/
   baseline.py     Dummy · TF-IDF 기준선
   plm.py          PLM 학습 (고정 임베딩 · fine-tuning · LoRA)
   evaluate.py     저장된 점수로 지표와 판정 계산
-notebooks/        EDA, 중간보고서, 가설 2, Colab 실행 노트북
+notebooks/        EDA, 중간보고서, 가설 2·추가검증, Colab 실행 노트북
 results/          결과 CSV
 figures/          그림
 docs/             보고서와 발표자료
@@ -34,6 +34,7 @@ EDA와 모델 비교 노트북에 실행 결과와 해석을 함께 저장했다
 | PLM 탐색 | [PLM 코드](src/plm.py) · [모델 비교 노트북](notebooks/project_mid_report.ipynb) | [성능 60행](results/plm_folds.csv) · [모델 비교](figures/kocoh_mid_report.png) · [LoRA 비교](figures/kocoh_lora_vs_finetune.png) |
 | 가설 1 · 읽는 방식 비교 | [PLM 코드](src/plm.py) · [평가 코드](src/evaluate.py) | [행별 점수](results/plm_h1_preds.csv) · [내부 validation 점수](results/plm_h1_inner_preds.csv) · [요약표](results/h1_summary.csv) · [fold별 지표](results/h1_folds.csv) · [판정](results/h1_tests.csv) · [임계값 비교](results/h1_threshold.csv) |
 | 가설 2 · 글 바꿔 끼우기 | [가설 2 노트북](notebooks/project_h2.ipynb) · [PLM 코드](src/plm.py) | [겉모습·내용 효과](figures/project_h2_style_vs_content.png) · [조건별 혐오 판정 비율](figures/project_h2_af_hate_rate.png) |
+| 가설 2 추가검증 · 겉모습과 주제 분리 | [추가검증 노트북](notebooks/project_h2_plus.ipynb) · [PLM 코드](src/plm.py) | [글별 주제 표시(Claude 판단)](results/h2_context_topics.csv) · [후보 수](results/h2_swap_candidates.csv) · [세 모델 행별 점수](results/plm_h2_topic_preds.csv) · [학습 기록](results/plm_h2_topic.csv) · [조건별 혐오 확률](figures/project_h2_plus_conditions.png) · [효과 크기](figures/project_h2_plus_effects.png) · [Claude 판정 비교](results/h2_claude_label_compare.csv) · [Claude 판정 그림](figures/project_h2_plus_claude.png) · [세 모델 비교](figures/project_h2_plus_models.png) · [붙인 글별 비교](figures/project_h2_plus_conditions_by_post.png) |
 
 6주차 두 기준선의 macro-F1은 **Dummy 최빈값 0.427**, **TF-IDF + Logistic Regression(댓글만) 0.647**이다(5-fold 평균). `baseline_folds.csv`에는 기본 10조합과 임계값 조정 6조합의 fold별 성능이 들어 있다.
 

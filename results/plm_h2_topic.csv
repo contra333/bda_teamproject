@@ -1,0 +1,16 @@
+﻿model,method,seed,fold,device,train_sec,train_loss,own_macro_f1,n_test,n_swap_rows
+KcELECTRA-base-v2022,finetune,42,0,mps,144.4,0.1196,0.773431,590.0,3354.0
+KcELECTRA-base-v2022,finetune,42,1,mps,157.1,0.128,0.761385,625.0,3342.0
+KcELECTRA-base-v2022,finetune,42,2,mps,147.5,0.0822,0.794469,618.0,2622.0
+KcELECTRA-base-v2022,finetune,42,3,mps,156.0,0.1229,0.887137,589.0,3144.0
+KcELECTRA-base-v2022,finetune,42,4,mps,158.4,0.1175,0.826185,578.0,3510.0
+klue-roberta-base,finetune,42,0,mps,155.9,0.1435,0.824171,,
+klue-roberta-base,finetune,42,1,mps,198.6,0.2058,0.756022,,
+klue-roberta-base,finetune,42,2,mps,193.9,0.1633,0.766183,,
+klue-roberta-base,finetune,42,3,mps,207.9,0.2113,0.809091,,
+klue-roberta-base,finetune,42,4,mps,198.5,0.1802,0.792832,,
+bert-base-multilingual-cased,finetune,42,0,mps,206.1,0.1333,0.745775,,
+bert-base-multilingual-cased,finetune,42,1,mps,209.3,0.1828,0.709114,,
+bert-base-multilingual-cased,finetune,42,2,mps,210.8,0.1519,0.718763,,
+bert-base-multilingual-cased,finetune,42,3,mps,226.1,0.1703,0.751241,,
+bert-base-multilingual-cased,finetune,42,4,mps,228.1,0.1372,0.796278,,
